@@ -21,7 +21,7 @@ namespace MediaPlayer
         {
             var ofd = new OpenFileDialog
             {
-                Filter = "MP3 (*.mp3) | *.mp3",
+                Filter = "MP3 (*.mp3) | *.mp3|Wav Files (*.wav) | *.wav",
             };
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
