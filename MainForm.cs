@@ -28,5 +28,47 @@ namespace MediaPlayer
                 axWindowsMediaPlayer1.URL = ofd.FileName;
             }
         }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            axWindowsMediaPlayer1.Ctlcontrols.stop();
+        }
+
+        private void btnPause_Click(object sender, EventArgs e)
+        {
+            axWindowsMediaPlayer1.Ctlcontrols.pause();
+        }
+
+        private void btnPlay_Click(object sender, EventArgs e)
+        {
+            axWindowsMediaPlayer1.Ctlcontrols.play();
+        }
+
+        private void btnFastForward_Click(object sender, EventArgs e)
+        {
+            // To get all of the available functionality of the player controls, cast the
+            // value returned by player.Ctlcontrols to a WMPLib.IWMPControls3 interface. 
+            WMPLib.IWMPControls3 controls = (WMPLib.IWMPControls3)axWindowsMediaPlayer1.Ctlcontrols;
+
+            // Check first to be sure the operation is valid.
+            if (controls.get_isAvailable("fastForward"))
+            {
+                controls.fastForward();
+            }
+        }
+
+        private void btnReversePlayer_Click(object sender, EventArgs e)
+        {
+            // To get all of the available functionality of the player controls, cast the
+            // value returned by player.Ctlcontrols to a WMPLib.IWMPControls3 interface. 
+            WMPLib.IWMPControls3 controls = (WMPLib.IWMPControls3)axWindowsMediaPlayer1.Ctlcontrols;
+
+            // Check first to be sure the operation is valid.
+            if (controls.get_isAvailable("fastReverse"))
+            {
+                controls.fastReverse();
+            }
+        }
+
     }
 }
