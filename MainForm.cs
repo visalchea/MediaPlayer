@@ -17,6 +17,7 @@ namespace MediaPlayer
         {
             InitializeComponent();
         }
+        string[] files;
 
         private void btnOpen_Click(object sender, EventArgs e)
         {
@@ -29,18 +30,23 @@ namespace MediaPlayer
             //    axWindowsMediaPlayer1.URL = ofd.FileName;
             //}
 
-            var fbd = new FolderBrowserDialog();
-            if(fbd.ShowDialog() == DialogResult.OK){
-                string[] files = Directory.GetFiles(fbd.SelectedPath);
-                foreach (string file in files)
+           
+                var fbd = new FolderBrowserDialog();
+                if (fbd.ShowDialog() == DialogResult.OK)
                 {
-                    if (Path.GetExtension(file) == ".mp3" || Path.GetExtension(file) == ".wav")
+                    files = Directory.GetFiles(fbd.SelectedPath);
+                    foreach (string file in files)
                     {
-                        //lstPlaylist.Items.Add(Path.GetFileName(file));
-                        lstPlaylist.Items.Add(file);
+                        if (Path.GetExtension(file).ToLower() == ".mp3" || Path.GetExtension(file) == ".wav")
+                        {
+                            //lstPlaylist.Items.Add(Path.GetFileName(file));
+                            lstPlaylist.Items.Add(file);
+                        }
                     }
+                    lstPlaylist.SelectedIndex = 0;
                 }
-            }
+
+          
         }
 
         private void btnStop_Click(object sender, EventArgs e)
@@ -87,6 +93,7 @@ namespace MediaPlayer
         private void lstPlaylist_SelectedIndexChanged(object sender, EventArgs e)
         {
             axWindowsMediaPlayer1.URL = lstPlaylist.SelectedItem.ToString();
+            axWindowsMediaPlayer1.Ctlcontrols.play();
         }
 
     }
