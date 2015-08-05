@@ -93,8 +93,18 @@ namespace MediaPlayer
         private void lstPlaylist_SelectedIndexChanged(object sender, EventArgs e)
         {
             axWindowsMediaPlayer1.URL = lstPlaylist.SelectedItem.ToString();
-            axWindowsMediaPlayer1.Ctlcontrols.play();
+            
         }
+
+        private void lstPlaylist_MouseDoubleClick(object sender, MouseEventArgs e){
+            int index = lstPlaylist.IndexFromPoint(e.Location);
+            if (index != System.Windows.Forms.ListBox.NoMatches)
+            {
+                axWindowsMediaPlayer1.URL = lstPlaylist.SelectedItem.ToString();
+                axWindowsMediaPlayer1.Ctlcontrols.play();
+            }
+        }
+       
 
     }
 }
