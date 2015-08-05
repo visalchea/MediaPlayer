@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace MediaPlayer
 {
@@ -19,13 +20,26 @@ namespace MediaPlayer
 
         private void btnOpen_Click(object sender, EventArgs e)
         {
-            var ofd = new OpenFileDialog
-            {
-                Filter = "MP3 (*.mp3) | *.mp3|Wav File (*.wav) | *.wav",
-            };
-            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                axWindowsMediaPlayer1.URL = ofd.FileName;
+            //var ofd = new OpenFileDialog
+            //{
+            //    Filter = "MP3 (*.mp3) | *.mp3|Wav File (*.wav) | *.wav",
+            //};
+            //if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            //{
+            //    axWindowsMediaPlayer1.URL = ofd.FileName;
+            //}
+
+            var fbd = new FolderBrowserDialog();
+            if(fbd.ShowDialog() == DialogResult.OK){
+                string[] files = Directory.GetFiles(fbd.SelectedPath);
+                foreach (string file in files)
+                {
+                    if (Path.GetExtension(file) == ".mp3" || Path.GetExtension(file) == ".wav")
+                    {
+                        //lstPlaylist.Items.Add(Path.GetFileName(file));
+                        lstPlaylist.Items.Add(file);
+                    }
+                }
             }
         }
 
@@ -41,7 +55,7 @@ namespace MediaPlayer
 
         private void btnPlay_Click(object sender, EventArgs e)
         {
-            axWindowsMediaPlayer1.Ctlcontrols.play();
+            axWindowsMediaPlayer1.Ctlcontrols.play();      
         }
 
         private void btnFastForward_Click(object sender, EventArgs e)
@@ -68,6 +82,11 @@ namespace MediaPlayer
             {
                 controls.fastReverse();
             }
+        }
+
+        private void lstPlaylist_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            axWindowsMediaPlayer1.URL = lstPlaylist.SelectedItem.ToString();
         }
 
     }
