@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
@@ -17,57 +12,50 @@ namespace MediaPlayer
         {
             InitializeComponent();
         }
-        
 
-        private void btnOpen_Click(object sender, EventArgs e)
+        void Play()
         {
-            //var ofd = new OpenFileDialog
-            //{
-            //    Filter = "MP3 (*.mp3) | *.mp3|Wav File (*.wav) | *.wav| All Files (*.*)|*.*",
-            //};
-            //if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            //{
-            //    axWindowsMediaPlayer1.URL = ofd.FileName;
-                
-            //}
+            if (player.URL.Length == 0)
+            {
+                string path = lstPlaylist.SelectedItem.ToString();
+                player.URL = path;
+            }
+            Text = Path.GetFileName(player.URL) + " - Media Player";
+            if (lstPlaylist.Items.Count == 0) return;
+            player.Ctlcontrols.play();
+        }
 
-
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
             var fbd = new FolderBrowserDialog();
             if (fbd.ShowDialog() == DialogResult.OK)
             {
-                string[] files = Directory.GetFiles(fbd.SelectedPath, "*.*", SearchOption.AllDirectories);
-                
-                foreach(string file in files)
-                {
-                    if (Path.GetExtension(file).ToLower() == ".mp3" || Path.GetExtension(file).ToLower() == ".wav" || Path.GetExtension(file).ToLower() == ".mp4")
-                  {
-                        lstPlaylist.Items.Add(file);
-                  } 
-                }
-                
+                string supportedExtensions = "*.mp3,*.wav,*.mp4,*.mpg,*.mpeg,*.wma,*.avi";
+                foreach (string file in Directory.GetFiles(fbd.SelectedPath, "*.*", SearchOption.AllDirectories).Where(s => supportedExtensions.Contains(Path.GetExtension(s).ToLower())))
+                    lstPlaylist.Items.Add(file);
             }
         }
 
         private void btnStop_Click(object sender, EventArgs e)
         {
-            axWindowsMediaPlayer1.Ctlcontrols.stop();
+            player.Ctlcontrols.stop();
         }
 
         private void btnPause_Click(object sender, EventArgs e)
         {
-            axWindowsMediaPlayer1.Ctlcontrols.pause();
+            player.Ctlcontrols.pause();
         }
 
         private void btnPlay_Click(object sender, EventArgs e)
         {
-            axWindowsMediaPlayer1.Ctlcontrols.play();
+            Play();
         }
 
         private void btnFastForward_Click(object sender, EventArgs e)
         {
             // To get all of the available functionality of the player controls, cast the
             // value returned by player.Ctlcontrols to a WMPLib.IWMPControls3 interface. 
-            WMPLib.IWMPControls3 controls = (WMPLib.IWMPControls3)axWindowsMediaPlayer1.Ctlcontrols;
+            WMPLib.IWMPControls3 controls = (WMPLib.IWMPControls3)player.Ctlcontrols;
 
             // Check first to be sure the operation is valid.
             if (controls.get_isAvailable("fastForward"))
@@ -80,7 +68,7 @@ namespace MediaPlayer
         {
             // To get all of the available functionality of the player controls, cast the
             // value returned by player.Ctlcontrols to a WMPLib.IWMPControls3 interface. 
-            WMPLib.IWMPControls3 controls = (WMPLib.IWMPControls3)axWindowsMediaPlayer1.Ctlcontrols;
+            WMPLib.IWMPControls3 controls = (WMPLib.IWMPControls3)player.Ctlcontrols;
 
             // Check first to be sure the operation is valid.
             if (controls.get_isAvailable("fastReverse"))
@@ -91,47 +79,62 @@ namespace MediaPlayer
 
         private void lstPlaylist_SelectedIndexChanged(object sender, EventArgs e)
         {
-            axWindowsMediaPlayer1.URL = lstPlaylist.SelectedItem.ToString();
+            //player.URL = lstPlaylist.SelectedItem.ToString();
 
         }
 
         private void lstPlaylist_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Up)
+            if (e.KeyCode == Keys.Enter)
             {
-                lstPlaylist.SelectedIndex++;
+                lstPlaylist_DoubleClick(null, null);
+                e.SuppressKeyPress = true;
             }
-            else if (e.KeyCode == Keys.Down)
-            {
-                lstPlaylist.SelectedIndex--;
-            }
-           
         }
 
         private void lstPlaylist_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            int index = lstPlaylist.IndexFromPoint(e.Location);
-            if (index != System.Windows.Forms.ListBox.NoMatches )
-            {
-                axWindowsMediaPlayer1.URL = lstPlaylist.SelectedItem.ToString();
-                axWindowsMediaPlayer1.Ctlcontrols.play();
-            }
+            // use DoubleClick instead, MouseDoubleClick is only with Mouse, not general
         }
 
-        private void lstPlaylist_SelectedIndexChanged_1(object sender, EventArgs e)
+        private void frmMain_Load(object sender, EventArgs e)
         {
-            lstPlaylist.KeyPress += new System.Windows.Forms.KeyPressEventHandler(lstPlaylistEnter);
+            //player.uiMode = "none";
+
+            // Load play list from saved file
+            var path = Path.Combine(Application.StartupPath, "playlist.m3u");
+            if (!File.Exists(path)) return;
+            var sr = new StreamReader(path);
+            while (sr.Peek() >= 0)
+                lstPlaylist.Items.Add(sr.ReadLine());
+            sr.Close();
         }
 
-        private void lstPlaylistEnter(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        private void lstPlaylist_DoubleClick(object sender, EventArgs e)
         {
-            if (e.KeyChar == (char)13)
-            {
-                axWindowsMediaPlayer1.Ctlcontrols.stop();
-                axWindowsMediaPlayer1.URL = lstPlaylist.SelectedItem.ToString();
-                axWindowsMediaPlayer1.Ctlcontrols.play();
-            }
+            player.URL = lstPlaylist.SelectedItem.ToString();
+            Play();
         }
 
+        private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            // Save current play list to file            
+            if (lstPlaylist.Items.Count == 0) return;
+            Hide();
+            var path = Path.Combine(Application.StartupPath, "playlist.m3u");
+            var sw = new StreamWriter(path);
+            foreach (var f in lstPlaylist.Items)
+            {
+                sw.WriteLine(f);
+            }
+            sw.Close();
+        }
+
+        //    private void player_EndOfStream(object sender, AxWMPLib._WMPOCXEvents_EndOfStreamEvent e)
+        //    {
+        //        var ind = lstPlaylist.SelectedIndex + 1;
+        //        if (ind == lstPlaylist.Items.Count) ind = 0;
+        //        lstPlaylist.SelectedIndex = ind;
+        //    }
     }
 }
