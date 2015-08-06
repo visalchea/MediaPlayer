@@ -37,7 +37,6 @@
             this.btnFastForward = new System.Windows.Forms.Button();
             this.btnReversePlayer = new System.Windows.Forms.Button();
             this.lstPlaylist = new System.Windows.Forms.ListBox();
-            this.lblDisplay = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -120,21 +119,11 @@
             this.lstPlaylist.SelectedIndexChanged += new System.EventHandler(this.lstPlaylist_SelectedIndexChanged);
             this.lstPlaylist.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstPlaylist_MouseDoubleClick);
             // 
-            // lblDisplay
-            // 
-            this.lblDisplay.AutoSize = true;
-            this.lblDisplay.Location = new System.Drawing.Point(621, 372);
-            this.lblDisplay.Name = "lblDisplay";
-            this.lblDisplay.Size = new System.Drawing.Size(35, 13);
-            this.lblDisplay.TabIndex = 8;
-            this.lblDisplay.Text = "label1";
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(761, 485);
-            this.Controls.Add(this.lblDisplay);
             this.Controls.Add(this.lstPlaylist);
             this.Controls.Add(this.btnReversePlayer);
             this.Controls.Add(this.btnFastForward);
@@ -147,7 +136,6 @@
             this.Text = "Music Player";
             ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -161,7 +149,6 @@
         private System.Windows.Forms.Button btnFastForward;
         private System.Windows.Forms.Button btnReversePlayer;
         private System.Windows.Forms.ListBox lstPlaylist;
-        private System.Windows.Forms.Label lblDisplay;
     }
 }
 

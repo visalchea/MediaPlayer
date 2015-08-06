@@ -17,36 +17,35 @@ namespace MediaPlayer
         {
             InitializeComponent();
         }
-        string[] files;
+        
 
         private void btnOpen_Click(object sender, EventArgs e)
         {
             //var ofd = new OpenFileDialog
             //{
-            //    Filter = "MP3 (*.mp3) | *.mp3|Wav File (*.wav) | *.wav",
+            //    Filter = "MP3 (*.mp3) | *.mp3|Wav File (*.wav) | *.wav| All Files (*.*)|*.*",
             //};
             //if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             //{
             //    axWindowsMediaPlayer1.URL = ofd.FileName;
+                
             //}
 
-           
-                var fbd = new FolderBrowserDialog();
-                if (fbd.ShowDialog() == DialogResult.OK)
-                {
-                    files = Directory.GetFiles(fbd.SelectedPath);
-                    foreach (string file in files)
-                    {
-                        if (Path.GetExtension(file).ToLower() == ".mp3" || Path.GetExtension(file) == ".wav")
-                        {
-                            //lstPlaylist.Items.Add(Path.GetFileName(file));
-                            lstPlaylist.Items.Add(file);
-                        }
-                    }
-                    lstPlaylist.SelectedIndex = 0;
+
+            var fbd = new FolderBrowserDialog();
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                string[] files = Directory.GetFiles(fbd.SelectedPath, "*.*", SearchOption.AllDirectories);
+                
+                foreach(string file in files){
+                  if (Path.GetExtension(file).ToLower() == ".mp3" || Path.GetExtension(file).ToLower() == ".wav")
+                  {
+                        lstPlaylist.Items.Add(file);
+                  }
+                    
                 }
 
-          
+            }
         }
 
         private void btnStop_Click(object sender, EventArgs e)
@@ -61,7 +60,7 @@ namespace MediaPlayer
 
         private void btnPlay_Click(object sender, EventArgs e)
         {
-            axWindowsMediaPlayer1.Ctlcontrols.play();      
+            axWindowsMediaPlayer1.Ctlcontrols.play();
         }
 
         private void btnFastForward_Click(object sender, EventArgs e)
@@ -93,10 +92,11 @@ namespace MediaPlayer
         private void lstPlaylist_SelectedIndexChanged(object sender, EventArgs e)
         {
             axWindowsMediaPlayer1.URL = lstPlaylist.SelectedItem.ToString();
-            
+
         }
 
-        private void lstPlaylist_MouseDoubleClick(object sender, MouseEventArgs e){
+        private void lstPlaylist_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
             int index = lstPlaylist.IndexFromPoint(e.Location);
             if (index != System.Windows.Forms.ListBox.NoMatches)
             {
@@ -104,7 +104,6 @@ namespace MediaPlayer
                 axWindowsMediaPlayer1.Ctlcontrols.play();
             }
         }
-       
 
     }
 }
