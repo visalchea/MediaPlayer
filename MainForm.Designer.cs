@@ -116,7 +116,7 @@
             this.lstPlaylist.Name = "lstPlaylist";
             this.lstPlaylist.Size = new System.Drawing.Size(488, 147);
             this.lstPlaylist.TabIndex = 7;
-            this.lstPlaylist.SelectedIndexChanged += new System.EventHandler(this.lstPlaylist_SelectedIndexChanged);
+            this.lstPlaylist.SelectedIndexChanged += new System.EventHandler(this.lstPlaylist_SelectedIndexChanged_1);
             this.lstPlaylist.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstPlaylist_MouseDoubleClick);
             // 
             // frmMain

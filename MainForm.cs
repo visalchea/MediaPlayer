@@ -37,14 +37,14 @@ namespace MediaPlayer
             {
                 string[] files = Directory.GetFiles(fbd.SelectedPath, "*.*", SearchOption.AllDirectories);
                 
-                foreach(string file in files){
-                  if (Path.GetExtension(file).ToLower() == ".mp3" || Path.GetExtension(file).ToLower() == ".wav")
+                foreach(string file in files)
+                {
+                    if (Path.GetExtension(file).ToLower() == ".mp3" || Path.GetExtension(file).ToLower() == ".wav" || Path.GetExtension(file).ToLower() == ".mp4")
                   {
                         lstPlaylist.Items.Add(file);
-                  }
-                    
+                  } 
                 }
-
+                
             }
         }
 
@@ -95,11 +95,39 @@ namespace MediaPlayer
 
         }
 
+        private void lstPlaylist_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Up)
+            {
+                lstPlaylist.SelectedIndex++;
+            }
+            else if (e.KeyCode == Keys.Down)
+            {
+                lstPlaylist.SelectedIndex--;
+            }
+           
+        }
+
         private void lstPlaylist_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             int index = lstPlaylist.IndexFromPoint(e.Location);
-            if (index != System.Windows.Forms.ListBox.NoMatches)
+            if (index != System.Windows.Forms.ListBox.NoMatches )
             {
+                axWindowsMediaPlayer1.URL = lstPlaylist.SelectedItem.ToString();
+                axWindowsMediaPlayer1.Ctlcontrols.play();
+            }
+        }
+
+        private void lstPlaylist_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            lstPlaylist.KeyPress += new System.Windows.Forms.KeyPressEventHandler(lstPlaylistEnter);
+        }
+
+        private void lstPlaylistEnter(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+            {
+                axWindowsMediaPlayer1.Ctlcontrols.stop();
                 axWindowsMediaPlayer1.URL = lstPlaylist.SelectedItem.ToString();
                 axWindowsMediaPlayer1.Ctlcontrols.play();
             }
