@@ -37,7 +37,7 @@
             this.btnFastForward = new System.Windows.Forms.Button();
             this.btnReversePlayer = new System.Windows.Forms.Button();
             this.lstPlaylist = new System.Windows.Forms.ListBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnOpen = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.player)).BeginInit();
             this.SuspendLayout();
             // 
@@ -121,15 +121,15 @@
             this.lstPlaylist.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstPlaylist_KeyDown);
             this.lstPlaylist.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstPlaylist_MouseDoubleClick);
             // 
-            // button1
+            // btnOpen
             // 
-            this.button1.Location = new System.Drawing.Point(594, 68);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Open";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.btnStop_Click);
+            this.btnOpen.Location = new System.Drawing.Point(594, 68);
+            this.btnOpen.Name = "btnOpen";
+            this.btnOpen.Size = new System.Drawing.Size(75, 23);
+            this.btnOpen.TabIndex = 2;
+            this.btnOpen.Text = "Open";
+            this.btnOpen.UseVisualStyleBackColor = true;
+            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
             // frmMain
             // 
@@ -141,7 +141,7 @@
             this.Controls.Add(this.btnFastForward);
             this.Controls.Add(this.btnPlay);
             this.Controls.Add(this.btnPause);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnOpen);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnBrowse);
             this.Controls.Add(this.player);
@@ -164,7 +164,7 @@
         private System.Windows.Forms.Button btnFastForward;
         private System.Windows.Forms.Button btnReversePlayer;
         private System.Windows.Forms.ListBox lstPlaylist;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnOpen;
     }
 }
 

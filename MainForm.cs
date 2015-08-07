@@ -130,6 +130,11 @@ namespace MediaPlayer
             sw.Close();
         }
 
+        private void btnOpen_Click(object sender, EventArgs e)
+        {
+            // TODO: open files (multiple selection is good), play then add to play list as well
+        }
+
         //    private void player_EndOfStream(object sender, AxWMPLib._WMPOCXEvents_EndOfStreamEvent e)
         //    {
         //        var ind = lstPlaylist.SelectedIndex + 1;
