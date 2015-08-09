@@ -29,41 +29,40 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            this.axWindowsMediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
-            this.btnOpen = new System.Windows.Forms.Button();
+            this.player = new AxWMPLib.AxWindowsMediaPlayer();
+            this.btnBrowse = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnPause = new System.Windows.Forms.Button();
             this.btnPlay = new System.Windows.Forms.Button();
             this.btnFastForward = new System.Windows.Forms.Button();
             this.btnReversePlayer = new System.Windows.Forms.Button();
             this.lstPlaylist = new System.Windows.Forms.ListBox();
-            this.lblTest = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).BeginInit();
+            this.btnOpen = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.player)).BeginInit();
             this.SuspendLayout();
             // 
-            // axWindowsMediaPlayer1
+            // player
             // 
-            this.axWindowsMediaPlayer1.Enabled = true;
-            this.axWindowsMediaPlayer1.Location = new System.Drawing.Point(43, 32);
-            this.axWindowsMediaPlayer1.Name = "axWindowsMediaPlayer1";
-            this.axWindowsMediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer1.OcxState")));
-            this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(488, 269);
-            this.axWindowsMediaPlayer1.TabIndex = 0;
-           // this.axWindowsMediaPlayer1.Enter += new System.EventHandler(this.axWindowsMediaPlayer1_Enter);
+            this.player.Enabled = true;
+            this.player.Location = new System.Drawing.Point(12, 12);
+            this.player.Name = "player";
+            this.player.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("player.OcxState")));
+            this.player.Size = new System.Drawing.Size(560, 269);
+            this.player.TabIndex = 0;
             // 
-            // btnOpen
+            // btnBrowse
             // 
-            this.btnOpen.Location = new System.Drawing.Point(594, 32);
-            this.btnOpen.Name = "btnOpen";
-            this.btnOpen.Size = new System.Drawing.Size(75, 23);
-            this.btnOpen.TabIndex = 1;
-            this.btnOpen.Text = "&Open";
-            this.btnOpen.UseVisualStyleBackColor = true;
-            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
+            this.btnBrowse.Location = new System.Drawing.Point(594, 32);
+            this.btnBrowse.Name = "btnBrowse";
+            this.btnBrowse.Size = new System.Drawing.Size(75, 23);
+            this.btnBrowse.TabIndex = 1;
+            this.btnBrowse.Text = "&Browse";
+            this.btnBrowse.UseVisualStyleBackColor = true;
+            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
             // btnStop
             // 
-            this.btnStop.Location = new System.Drawing.Point(594, 85);
+            this.btnStop.Location = new System.Drawing.Point(594, 107);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(75, 23);
             this.btnStop.TabIndex = 2;
@@ -73,7 +72,7 @@
             // 
             // btnPause
             // 
-            this.btnPause.Location = new System.Drawing.Point(594, 133);
+            this.btnPause.Location = new System.Drawing.Point(594, 155);
             this.btnPause.Name = "btnPause";
             this.btnPause.Size = new System.Drawing.Size(75, 23);
             this.btnPause.TabIndex = 3;
@@ -83,7 +82,7 @@
             // 
             // btnPlay
             // 
-            this.btnPlay.Location = new System.Drawing.Point(594, 180);
+            this.btnPlay.Location = new System.Drawing.Point(594, 202);
             this.btnPlay.Name = "btnPlay";
             this.btnPlay.Size = new System.Drawing.Size(75, 23);
             this.btnPlay.TabIndex = 4;
@@ -93,7 +92,7 @@
             // 
             // btnFastForward
             // 
-            this.btnFastForward.Location = new System.Drawing.Point(594, 229);
+            this.btnFastForward.Location = new System.Drawing.Point(594, 251);
             this.btnFastForward.Name = "btnFastForward";
             this.btnFastForward.Size = new System.Drawing.Size(75, 23);
             this.btnFastForward.TabIndex = 5;
@@ -103,7 +102,7 @@
             // 
             // btnReversePlayer
             // 
-            this.btnReversePlayer.Location = new System.Drawing.Point(594, 278);
+            this.btnReversePlayer.Location = new System.Drawing.Point(594, 300);
             this.btnReversePlayer.Name = "btnReversePlayer";
             this.btnReversePlayer.Size = new System.Drawing.Size(75, 23);
             this.btnReversePlayer.TabIndex = 6;
@@ -114,55 +113,58 @@
             // lstPlaylist
             // 
             this.lstPlaylist.FormattingEnabled = true;
-            this.lstPlaylist.Location = new System.Drawing.Point(43, 316);
+            this.lstPlaylist.Location = new System.Drawing.Point(12, 287);
             this.lstPlaylist.Name = "lstPlaylist";
-            this.lstPlaylist.Size = new System.Drawing.Size(488, 147);
-            this.lstPlaylist.TabIndex = 0;
-            this.lstPlaylist.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lstPlaylistEnter);
+            this.lstPlaylist.Size = new System.Drawing.Size(560, 173);
+            this.lstPlaylist.TabIndex = 7;
+            this.lstPlaylist.DoubleClick += new System.EventHandler(this.lstPlaylist_DoubleClick);
+            this.lstPlaylist.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstPlaylist_KeyDown);
             this.lstPlaylist.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstPlaylist_MouseDoubleClick);
             // 
-            // lblTest
+            // btnOpen
             // 
-            this.lblTest.AutoSize = true;
-            this.lblTest.Location = new System.Drawing.Point(581, 352);
-            this.lblTest.Name = "lblTest";
-            this.lblTest.Size = new System.Drawing.Size(35, 13);
-            this.lblTest.TabIndex = 7;
-            this.lblTest.Text = "label1";
+            this.btnOpen.Location = new System.Drawing.Point(594, 68);
+            this.btnOpen.Name = "btnOpen";
+            this.btnOpen.Size = new System.Drawing.Size(75, 23);
+            this.btnOpen.TabIndex = 2;
+            this.btnOpen.Text = "Open";
+            this.btnOpen.UseVisualStyleBackColor = true;
+            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(761, 485);
-            this.Controls.Add(this.lblTest);
+            this.ClientSize = new System.Drawing.Size(707, 485);
             this.Controls.Add(this.lstPlaylist);
             this.Controls.Add(this.btnReversePlayer);
             this.Controls.Add(this.btnFastForward);
             this.Controls.Add(this.btnPlay);
             this.Controls.Add(this.btnPause);
-            this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnOpen);
-            this.Controls.Add(this.axWindowsMediaPlayer1);
+            this.Controls.Add(this.btnStop);
+            this.Controls.Add(this.btnBrowse);
+            this.Controls.Add(this.player);
             this.Name = "frmMain";
             this.Text = "Music Player";
-            ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).EndInit();
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);
+            this.Load += new System.EventHandler(this.frmMain_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.player)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer1;
-        private System.Windows.Forms.Button btnOpen;
+        private AxWMPLib.AxWindowsMediaPlayer player;
+        private System.Windows.Forms.Button btnBrowse;
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Button btnPause;
         private System.Windows.Forms.Button btnPlay;
         private System.Windows.Forms.Button btnFastForward;
         private System.Windows.Forms.Button btnReversePlayer;
         private System.Windows.Forms.ListBox lstPlaylist;
-        private System.Windows.Forms.Label lblTest;
+        private System.Windows.Forms.Button btnOpen;
     }
 }
 
