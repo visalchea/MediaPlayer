@@ -139,11 +139,13 @@ namespace MediaPlayer
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 string[] result = ofd.FileNames;
-
+                lstPlaylist.SelectedIndex = 0;
                 foreach (string y in result)
                 {
+                    Play();
                     lstPlaylist.Items.Add(y);
                 }
+
             }     
         }
 
