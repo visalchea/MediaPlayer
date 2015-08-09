@@ -37,6 +37,7 @@
             this.btnFastForward = new System.Windows.Forms.Button();
             this.btnReversePlayer = new System.Windows.Forms.Button();
             this.lstPlaylist = new System.Windows.Forms.ListBox();
+            this.lblTest = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -48,6 +49,7 @@
             this.axWindowsMediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer1.OcxState")));
             this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(488, 269);
             this.axWindowsMediaPlayer1.TabIndex = 0;
+           // this.axWindowsMediaPlayer1.Enter += new System.EventHandler(this.axWindowsMediaPlayer1_Enter);
             // 
             // btnOpen
             // 
@@ -115,15 +117,25 @@
             this.lstPlaylist.Location = new System.Drawing.Point(43, 316);
             this.lstPlaylist.Name = "lstPlaylist";
             this.lstPlaylist.Size = new System.Drawing.Size(488, 147);
-            this.lstPlaylist.TabIndex = 7;
-            this.lstPlaylist.SelectedIndexChanged += new System.EventHandler(this.lstPlaylist_SelectedIndexChanged_1);
+            this.lstPlaylist.TabIndex = 0;
+            this.lstPlaylist.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lstPlaylistEnter);
             this.lstPlaylist.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstPlaylist_MouseDoubleClick);
+            // 
+            // lblTest
+            // 
+            this.lblTest.AutoSize = true;
+            this.lblTest.Location = new System.Drawing.Point(581, 352);
+            this.lblTest.Name = "lblTest";
+            this.lblTest.Size = new System.Drawing.Size(35, 13);
+            this.lblTest.TabIndex = 7;
+            this.lblTest.Text = "label1";
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(761, 485);
+            this.Controls.Add(this.lblTest);
             this.Controls.Add(this.lstPlaylist);
             this.Controls.Add(this.btnReversePlayer);
             this.Controls.Add(this.btnFastForward);
@@ -136,6 +148,7 @@
             this.Text = "Music Player";
             ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -149,6 +162,7 @@
         private System.Windows.Forms.Button btnFastForward;
         private System.Windows.Forms.Button btnReversePlayer;
         private System.Windows.Forms.ListBox lstPlaylist;
+        private System.Windows.Forms.Label lblTest;
     }
 }
 

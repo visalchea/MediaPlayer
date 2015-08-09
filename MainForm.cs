@@ -91,8 +91,9 @@ namespace MediaPlayer
 
         private void lstPlaylist_SelectedIndexChanged(object sender, EventArgs e)
         {
-            axWindowsMediaPlayer1.URL = lstPlaylist.SelectedItem.ToString();
-
+           // axWindowsMediaPlayer1.URL = lstPlaylist.SelectedItem.ToString();
+            axWindowsMediaPlayer1.PlayStateChange += new AxWMPLib._WMPOCXEvents_PlayStateChangeEventHandler(axWindowsMediaPlayer1_PlayStateChange);
+      
         }
 
         private void lstPlaylist_KeyDown(object sender, KeyEventArgs e)
@@ -110,18 +111,12 @@ namespace MediaPlayer
 
         private void lstPlaylist_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            int index = lstPlaylist.IndexFromPoint(e.Location);
-            if (index != System.Windows.Forms.ListBox.NoMatches )
+            if (e.Clicks == 2 )
             {
                 axWindowsMediaPlayer1.URL = lstPlaylist.SelectedItem.ToString();
-                axWindowsMediaPlayer1.Ctlcontrols.play();
             }
         }
 
-        private void lstPlaylist_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-            lstPlaylist.KeyPress += new System.Windows.Forms.KeyPressEventHandler(lstPlaylistEnter);
-        }
 
         private void lstPlaylistEnter(object sender, System.Windows.Forms.KeyPressEventArgs e)
         {
@@ -130,6 +125,20 @@ namespace MediaPlayer
                 axWindowsMediaPlayer1.Ctlcontrols.stop();
                 axWindowsMediaPlayer1.URL = lstPlaylist.SelectedItem.ToString();
                 axWindowsMediaPlayer1.Ctlcontrols.play();
+            }
+        }
+
+
+        private void axWindowsMediaPlayer1_PlayStateChange(object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e)
+        {
+            if  (axWindowsMediaPlayer1.playState == WMPLib.WMPPlayState.wmppsPlaying)
+            {
+                lblTest.Text = "stop";
+                lstPlaylist.SelectedIndex++;
+            }
+            else
+            {
+                lblTest.Text = "play";
             }
         }
 
