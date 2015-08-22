@@ -38,6 +38,8 @@
             this.btnReversePlayer = new System.Windows.Forms.Button();
             this.lstPlaylist = new System.Windows.Forms.ListBox();
             this.btnOpen = new System.Windows.Forms.Button();
+            this.lblPlaylist = new System.Windows.Forms.Label();
+            this.btnShuffle = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.player)).BeginInit();
             this.SuspendLayout();
             // 
@@ -117,6 +119,7 @@
             this.lstPlaylist.Name = "lstPlaylist";
             this.lstPlaylist.Size = new System.Drawing.Size(560, 173);
             this.lstPlaylist.TabIndex = 7;
+            this.lstPlaylist.SelectedIndexChanged += new System.EventHandler(this.lstPlaylist_SelectedIndexChanged);
             this.lstPlaylist.DoubleClick += new System.EventHandler(this.lstPlaylist_DoubleClick);
             this.lstPlaylist.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstPlaylist_KeyDown);
             this.lstPlaylist.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstPlaylist_MouseDoubleClick);
@@ -131,11 +134,32 @@
             this.btnOpen.UseVisualStyleBackColor = true;
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
+            // lblPlaylist
+            // 
+            this.lblPlaylist.AutoSize = true;
+            this.lblPlaylist.Location = new System.Drawing.Point(619, 431);
+            this.lblPlaylist.Name = "lblPlaylist";
+            this.lblPlaylist.Size = new System.Drawing.Size(35, 13);
+            this.lblPlaylist.TabIndex = 8;
+            this.lblPlaylist.Text = "label1";
+            // 
+            // btnShuffle
+            // 
+            this.btnShuffle.Location = new System.Drawing.Point(597, 344);
+            this.btnShuffle.Name = "btnShuffle";
+            this.btnShuffle.Size = new System.Drawing.Size(75, 23);
+            this.btnShuffle.TabIndex = 9;
+            this.btnShuffle.Text = "Shuffle";
+            this.btnShuffle.UseVisualStyleBackColor = true;
+           
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(707, 485);
+            this.Controls.Add(this.btnShuffle);
+            this.Controls.Add(this.lblPlaylist);
             this.Controls.Add(this.lstPlaylist);
             this.Controls.Add(this.btnReversePlayer);
             this.Controls.Add(this.btnFastForward);
@@ -151,6 +175,7 @@
             this.Load += new System.EventHandler(this.frmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.player)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -165,6 +190,8 @@
         private System.Windows.Forms.Button btnReversePlayer;
         private System.Windows.Forms.ListBox lstPlaylist;
         private System.Windows.Forms.Button btnOpen;
+        private System.Windows.Forms.Label lblPlaylist;
+        private System.Windows.Forms.Button btnShuffle;
     }
 }
 

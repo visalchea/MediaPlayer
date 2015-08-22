@@ -17,12 +17,15 @@ namespace MediaPlayer
         {
             if (player.URL.Length == 0)
             {
+                lstPlaylist.SelectedIndex = 0;
                 string path = lstPlaylist.SelectedItem.ToString();
                 player.URL = path;
             }
+
             Text = Path.GetFileName(player.URL) + " - Media Player"; 
             if (lstPlaylist.Items.Count == 0)  return; 
             player.Ctlcontrols.play();
+
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
@@ -33,6 +36,7 @@ namespace MediaPlayer
                 string supportedExtensions = "*.mp3,*.wav,*.mp4,*.mpg,*.mpeg,*.wma,*.avi";
                 foreach (string file in Directory.GetFiles(fbd.SelectedPath, "*.*", SearchOption.AllDirectories).Where(s => supportedExtensions.Contains(Path.GetExtension(s).ToLower())))
                     lstPlaylist.Items.Add(file);
+                Play();
             }
         }
 
@@ -77,11 +81,6 @@ namespace MediaPlayer
             }
         }
 
-        private void lstPlaylist_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //player.URL = lstPlaylist.SelectedItem.ToString();
-
-        }
 
         private void lstPlaylist_KeyDown(object sender, KeyEventArgs e)
         {
@@ -108,6 +107,12 @@ namespace MediaPlayer
             while (sr.Peek() >= 0)
                 lstPlaylist.Items.Add(sr.ReadLine());
             sr.Close();
+
+            if (lstPlaylist.Items.Count > 0)  Play();
+
+            
+            player.PlayStateChange += new AxWMPLib._WMPOCXEvents_PlayStateChangeEventHandler(player_PlayStateChange);
+            Play();
         }
 
         private void lstPlaylist_DoubleClick(object sender, EventArgs e)
@@ -139,21 +144,45 @@ namespace MediaPlayer
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 string[] result = ofd.FileNames;
-                lstPlaylist.SelectedIndex = 0;
-                foreach (string y in result)
-                {
-                    Play();
-                    lstPlaylist.Items.Add(y);
-                }
 
+                foreach (string music_file in result)
+                {
+                    if (Path.GetExtension(music_file).ToLower() == ".mp3" || Path.GetExtension(music_file).ToLower() == ".wav" || Path.GetExtension(music_file).ToLower() == "mp4")
+                    {
+                        lstPlaylist.Items.Add(music_file);
+                          Play();       
+                    }
+                }
             }     
         }
 
-        //    private void player_EndOfStream(object sender, AxWMPLib._WMPOCXEvents_EndOfStreamEvent e)
-        //    {
-        //        var ind = lstPlaylist.SelectedIndex + 1;
-        //        if (ind == lstPlaylist.Items.Count) ind = 0;
-        //        lstPlaylist.SelectedIndex = ind;
-        //    }
+        private void player_EndOfStream(object sender, AxWMPLib._WMPOCXEvents_EndOfStreamEvent e)
+        {
+            var ind = lstPlaylist.SelectedIndex + 1;
+            if (ind == lstPlaylist.Items.Count) ind = 0;
+            lstPlaylist.SelectedIndex = ind;
+        }
+
+        private void player_PlayStateChange(object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e)
+        {
+            if (player.playState == WMPLib.WMPPlayState.wmppsStopped)
+            {
+                var ind = lstPlaylist.SelectedIndex + 1;
+                if (ind == lstPlaylist.Items.Count) ind = 0;
+                lstPlaylist.SelectedIndex = ind;
+                lblPlaylist.Text = "test";
+                
+ 
+            }
+           
+        }
+
+        private void lstPlaylist_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+           
+        }
+
+    
     }
 }
